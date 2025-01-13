@@ -1,23 +1,26 @@
 name: Build for release
 
 on:
-  workflow_dispatch:
   push:
     branches:
-     - "main"
+    - "main"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Install dependencies
       run: sudo apt-get install --assume-yes gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libgnutls28-dev uuid-dev
+
     - name: Download source code
       uses: actions/checkout@v4
       with:
         submodules: true
+
     - name: Build
       run: make
+
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,30 @@
+name: Build for testing
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - "test"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run: sudo apt-get install --assume-yes gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libgnutls28-dev uuid-dev
+
+    - name: Download source code
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Build
+      run: make
+
+    - name: Upload image
+      uses: actions/upload-artifact@v4
+      with:
+        name: flash-image.bin
+        path: trusted-firmware-a/build/a3700/release/flash-image.bin
