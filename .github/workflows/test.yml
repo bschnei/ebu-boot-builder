@@ -16,10 +16,7 @@ jobs:
       run: sudo apt-get install --assume-yes gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libgnutls28-dev uuid-dev
 
     - name: Download source code
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-        submodules: true
+      run: git clone --branch test --depth 1 --recursive https://github.com/bschnei/ebu-bootloader.git
 
     - name: Build
       run: make
